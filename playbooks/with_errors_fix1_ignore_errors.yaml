@@ -1,0 +1,16 @@
+---
+- name: error demo
+  hosts: ansible1
+  gather_facts: false
+  ignore_errors: true
+  tasks:
+    - name: copy a file
+      copy:
+        src: /tmp/hello
+        dest: /tmp
+    - name: printing an intermediare message
+      debug:
+         msg: got to an intermediate stage!  # indented with three spaces
+    - name: running this
+      debug:
+        msg: successfully running this (last task at the end of playbook)  # different indentation

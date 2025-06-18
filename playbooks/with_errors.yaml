@@ -1,0 +1,14 @@
+---
+- name: error demo
+  hosts: ansible1
+  tasks:
+    - name: copy a file
+      copy:
+        src: /tmp/hello
+        dest: /tmp
+    - name: showing syntax error
+        debug:
+          msg: this is a syntax error
+    - name: running this
+      debug:
+        msg: successfully running this (last task at the end of playbook)
