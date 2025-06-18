@@ -1,0 +1,17 @@
+---
+- name: Run a webserver
+  gather_facts: false
+  hosts: ansible1
+  tasks:
+    - name: Installing httpd
+      ansible.builtin.debug:
+        msg: Installing httpd (message from debug module)
+    - name: Enable and start httpd
+      ansible.builtin.debug:
+        msg: Starting httpd (message from debug module)
+    - name: Open port in firewall
+      ansible.builtin.debug:
+        msg: Open port in firewall (message from debug module)
+    - name: Copy a pre-prepared file
+      ansible.builtin.debug:
+        msg: Copying a pre-prepared file (message from debug module)
