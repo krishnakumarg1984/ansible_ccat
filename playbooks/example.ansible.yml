@@ -1,0 +1,19 @@
+---
+- name: This is play one
+  gather_facts: false
+  hosts: localhost
+  tasks:
+    - name: This is global task 1 (play 1)
+      ansible.builtin.debug:
+        msg: this is global message 1 (from task 1, of play 1)
+    - name: This is global task 2 (play 1)
+      ansible.builtin.debug:
+        msg: this is global message 2 (from task 2, of play 1)
+- name: This is play two
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: This is global task 3 (task 1 from play 2)
+      ansible.builtin.debug:
+        msg: this is global message 3 (from global task 3, i.e. local task 1 from
+          play 2)
