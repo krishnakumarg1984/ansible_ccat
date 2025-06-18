@@ -4,14 +4,29 @@
   hosts: ansible1
   tasks:
     - name: Installing httpd
-      ansible.builtin.debug:
-        msg: Installing httpd (message from debug module)
+      # ansible.builtin.debug:
+      #   msg: Installing httpd using dnf (message from debug module)
+      ansible.builtin.dnf:
+        name: httpd
+        state: present
     - name: Enable and start httpd
-      ansible.builtin.debug:
-        msg: Starting httpd (message from debug module)
+      # ansible.builtin.debug:
+      #   msg: Enable/start httpd using the service module (msg from debug module)
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: true
     - name: Open port in firewall
-      ansible.builtin.debug:
-        msg: Open port in firewall (message from debug module)
+      # ansible.builtin.debug:
+      #   msg: Open port in firewall using firewalld (message from debug module)
+      ansible.posix.firewalld:
+        immediate: true
+        permanent: true
+        service: http
+        state: enabled
     - name: Copy a pre-prepared file
-      ansible.builtin.debug:
-        msg: Copying a pre-prepared file (message from debug module)
+      # ansible.builtin.debug:
+      #   msg: Copying a pre-prepared file (message from debug module)
+      ansible.builtin.copy:
+        src: ./index.html
+        dest: /var/www/index.html
