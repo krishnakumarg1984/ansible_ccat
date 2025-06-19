@@ -9,10 +9,10 @@
     - name: Capture the list of users in a register variable  # noqa no-changed-when
       ansible.builtin.command: cat /etc/passwd
       register: passwd_contents
-    - name: Debug print the connects of the register variable
-      ansible.builtin.debug:
-        var: passwd_contents
-    - name: Debug print using the builtin find function
+    # - name: Print the connects of the register variable
+    #   ansible.builtin.debug:
+    #     var: passwd_contents
+    - name: Print if user account is found on the machine
       ansible.builtin.debug:
         msg: echo "passwd contains user {{ username }}"
       when: passwd_contents.stdout.find(username) != -1
