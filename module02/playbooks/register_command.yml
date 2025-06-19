@@ -4,6 +4,7 @@
   vars_prompt:
     - name: username
       prompt: which user are you looking for
+      private: false
   tasks:
     - name: Capture the list of users in a register variable  # noqa no-changed-when
       ansible.builtin.command: cat /etc/passwd
