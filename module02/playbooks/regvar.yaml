@@ -9,3 +9,5 @@
     - name: Show the contents of the register variable
       debug:
         var: thisdate
+        msg: >-
+          The date is {{ thisdate["stdout"] }}
