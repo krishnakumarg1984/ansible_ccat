@@ -16,6 +16,25 @@
         name: httpd
         state: started
         enabled: true
+    - name: Install firewalld
+      # ansible.builtin.debug:
+      #   msg: Install firewalld (message from debug module)
+      ansible.builtin.dnf:
+        name: firewalld
+        state: present
+    - name: Install python bindings to firewalld
+      # ansible.builtin.debug:
+      #   msg: Install python bindings to firewalld (message from debug module)
+      ansible.builtin.dnf:
+        name: python3-firewall
+        state: present
+    - name: Enable and start the firewalld service
+      # ansible.builtin.debug:
+      #   msg: Enable/start firewalld using the service module (msg from debug module)
+      ansible.builtin.service:
+        name: firewalld
+        state: started
+        enabled: true
     - name: Open port in firewall
       # ansible.builtin.debug:
       #   msg: Open port in firewall using firewalld (message from debug module)
