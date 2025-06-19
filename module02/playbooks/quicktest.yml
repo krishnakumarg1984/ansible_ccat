@@ -2,6 +2,7 @@
 - name: Test command result
   # hosts: all
   hosts: localhost
+  gather_facts: false
   tasks:
     - name: Check a fact
       debug:
