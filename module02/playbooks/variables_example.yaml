@@ -1,0 +1,10 @@
+---
+- name: Variables demo
+  vars:
+    myuser: anna
+  hosts: all
+  tasks:
+    - name: Creating user {{ myuser }}
+      ansible.builtin.user:
+        name: '{{ myuser }}'
+        shell: /bin/bash
