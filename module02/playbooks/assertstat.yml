@@ -5,8 +5,9 @@
   tasks:
     - name: Stat a directory
       ansible.builtin.stat:
-        path: /etc/hosts
+        # path: /etc/hosts
+        path: /etc
       register: sta
-    - name: Assert that /etc is a directory
+    - name: Assert that the filesystem entity stat'ed is a directory
       ansible.builtin.assert:
         that: sta.stat.isdir
