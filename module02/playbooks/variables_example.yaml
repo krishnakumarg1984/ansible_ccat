@@ -1,5 +1,6 @@
 ---
 - name: Variables demo
+  gather_facts: false
   vars:
     myuser: anna
   hosts: all
