@@ -2,6 +2,7 @@
 - name: set up web server
   # hosts: all
   hosts: ansible1
+  gather_facts: false
   force_handlers: true
   tasks:
     - name: install httpd
@@ -10,7 +11,7 @@
         state: present
     - name: copy index.html  # noqa risky-file-permissions
       copy:
-        src: /tmp/index.html
+        src: ./index.html
         dest: /var/www/html/index.html
       notify: [restart_web]
     - name: copy nothing - intended to fail  # noqa risky-file-permissions
