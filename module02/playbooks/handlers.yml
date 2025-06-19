@@ -1,20 +1,20 @@
 ---
 - name: set up web server
-  hosts: all
+  # hosts: all
+  hosts: ansible1
   force_handlers: true
   tasks:
     - name: install httpd
-      yum: 
+      yum:
         name: httpd
-        state: latest
-    - name: copy index.html
+        state: present
+    - name: copy index.html  # noqa risky-file-permissions
       copy:
         src: /tmp/index.html
         dest: /var/www/html/index.html
-      notify:
-        - restart_web
-    - name: copy nothing - intended to fail
-      copy: 
+      notify: [restart_web]
+    - name: copy nothing - intended to fail  # noqa risky-file-permissions
+      copy:
         src: /tmp/nothing
         dest: /var/www/html/nothing.html
   handlers:
