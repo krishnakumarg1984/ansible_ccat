@@ -1,2 +1,4 @@
 ---
 myuser: anna
+web_package: httpd
+web_service: httpd

@@ -1,0 +1,27 @@
+---
+- name: Installing a web package on RHEL
+  gather_facts: false
+  hosts: rhel
+  tasks:
+    - name: Installing {{ web_package }}
+      ansible.builtin.dnf:
+        name: '{{ web_package }}'
+        state: present
+    - name: Enable and start {{ web_service }}
+      ansible.builtin.service:
+        name: '{{ web_service }}'
+        state: started
+        enabled: true
+- name: Installing a web package on Ubuntu
+  gather_facts: false
+  hosts: ubuntu
+  tasks:
+    - name: Installing {{ web_package }}
+      ansible.builtin.apt:
+        name: '{{ web_package }}'
+        state: present
+    - name: Enable and start {{ web_service }}
+      ansible.builtin.service:
+        name: '{{ web_service }}'
+        state: started
+        enabled: true
