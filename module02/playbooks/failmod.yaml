@@ -1,0 +1,15 @@
+---
+- name: Demonstrating fail module
+  ignore_errors: true
+  hosts: localhost
+  tasks:
+    - name: Showing failure  # noqa no-changed-when
+      ansible.builtin.command: echo hello world
+      register: command_result
+    - name: Report a failure
+      ansible.builtin.fail:
+        msg: The command has failed
+      when: "'world' in command_result.stdout"
+    - name: See if we get here
+      ansible.builtin.debug:
+        msg: We got to the end
