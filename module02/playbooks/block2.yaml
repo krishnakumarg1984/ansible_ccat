@@ -1,5 +1,5 @@
 ---
-- name: Using blocks
+- name: Using blocks  # note that this example requires httpd/apache2 to be installed
   # hosts: all
   hosts: ansible1
   gather_facts: false
