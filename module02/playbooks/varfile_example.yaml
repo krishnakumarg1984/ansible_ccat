@@ -1,0 +1,13 @@
+---
+- name: Variables demo
+  gather_facts: false
+  # vars:
+  #   myuser: anna
+  vars_files: [myvarfile]
+  hosts: all
+  tasks:
+    - name: Administering changes related to user {{ myuser }}
+      ansible.builtin.user:
+        name: '{{ myuser }}'
+        shell: /bin/bash
+        # state: absent
