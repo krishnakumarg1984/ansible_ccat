@@ -1,0 +1,15 @@
+---
+- name: Simple block example
+  hosts: all
+  tasks:
+    - name: Setting up http
+      when: ansible_distribution == "RedHat"
+      block:
+        - name: Installing http
+          ansible.builtin.dnf:
+            name: httpd
+            state: present
+        - name: Restart httpd
+          ansible.builtin.service:
+            name: httpd
+            state: started
