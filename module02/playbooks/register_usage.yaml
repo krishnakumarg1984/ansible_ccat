@@ -1,0 +1,14 @@
+---
+- name: Demonstrate how register works
+  hosts: all
+  gather_facts: false
+  vars:
+    username: anna
+  tasks:
+    - name: Show the use of register with an arbitary module
+      ansible.builtin.user:
+        name: '{{ username }}'
+      register: myuser
+    - name: Show the results of register
+      ansible.builtin.debug:
+        var: myuser
