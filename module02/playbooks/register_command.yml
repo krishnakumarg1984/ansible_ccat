@@ -1,0 +1,17 @@
+---
+- name: More demos of using the register variable
+  hosts: all
+  vars_prompt:
+    - name: username
+      prompt: which user are you looking for
+  tasks:
+    - name: Capture the list of users in a register variable  # noqa no-changed-when
+      ansible.builtin.command: cat /etc/passwd
+      register: passwd_contents
+    - name: Debug print the connects of the register variable
+      ansible.builtin.debug:
+        var: passwd_contents
+    - name: Debug print using the builtin find function
+      ansible.builtin.debug:
+        msg: echo "passwd contains user {{ username }}"
+      when: passwd_contents.stdout.find(username) != -1
