@@ -6,4 +6,4 @@
       package:
         name: httpd
         state: installed
-      when: [ansible_distribution == "RedHat", ansible_memfree_mb < 512]
+      when: [ansible_distribution == "RedHat", ansible_memfree_mb > 512]
