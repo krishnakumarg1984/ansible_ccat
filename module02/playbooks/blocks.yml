@@ -3,7 +3,8 @@
   hosts: all
   tasks:
     - name: Setting up http
-      when: ansible_distribution == "RedHat"
+      # when: ansible_distribution == "RedHat"
+      when: ansible_os_family == "RedHat"
       block:
         - name: Installing http
           ansible.builtin.dnf:
