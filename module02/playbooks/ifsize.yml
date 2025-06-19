@@ -1,0 +1,12 @@
+---
+- name: Conditionals test
+  hosts: all
+  vars:
+    package: nmap
+  tasks:
+    - name: Install vsftpd if sufficient space on /boot
+      ansible.builtin.package:
+        name: '{{ package }}'
+        state: present
+      loop: '{{ ansible_mounts }}'
+      when: item.mount == "/boot" and item.size_available > 100000000
