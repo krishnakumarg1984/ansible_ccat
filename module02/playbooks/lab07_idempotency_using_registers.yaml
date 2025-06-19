@@ -9,7 +9,7 @@
       register: addeduser
     - name: Run an assertion
       ansible.builtin.assert:
-        that: [addeduser.rc = "9"]
+        that: [addeduser.rc == 9]
         success_msg: user already exists, but that is okay because we are now idempotent
     - name: Check that end of playbook is reached
       ansible.builtin.debug:
