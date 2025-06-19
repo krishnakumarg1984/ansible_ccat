@@ -1,7 +1,7 @@
 ---
 - name: Demo of `when`
   hosts: all
-  gather_facts: false
+  # gather_facts: false  # will error since facts gathering is required in this example!
   vars:
     # supported_distros: [Ubuntu, CentOS, Fedora]
     supported_distros: [CentOS, Fedora, RedHat]
