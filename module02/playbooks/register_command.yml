@@ -1,6 +1,7 @@
 ---
 - name: More demos of using the register variable
   hosts: all
+  gather_facts: false
   vars_prompt:
     - name: username
       prompt: which user are you looking for
