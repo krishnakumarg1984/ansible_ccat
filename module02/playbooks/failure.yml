@@ -2,6 +2,7 @@
 - name: Demonstrating failed_when
   # hosts: all
   hosts: localhost
+  gather_facts: false
   tasks:
     - name: Showing failure  # noqa no-changed-when
       ansible.builtin.command: echo hello world
