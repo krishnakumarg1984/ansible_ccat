@@ -1,0 +1,12 @@
+---
+- name: Sample of stat and assert
+  hosts: ansible2
+  gather_facts: false
+  tasks:
+    - name: Stat a directory
+      ansible.builtin.stat:
+        path: /etc/hosts
+      register: sta
+    - name: Assert that /etc is a directory
+      ansible.builtin.assert:
+        that: sta.stat.isdir
