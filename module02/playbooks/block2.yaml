@@ -1,0 +1,28 @@
+---
+- name: Using blocks
+  # hosts: all
+  hosts: ansible1
+  gather_facts: false
+  tasks:
+    - name: Intended to be successful
+      block:
+        - name: Remove a file  # noqa no-changed-when
+          ansible.builtin.command:
+            cmd: rm /var/www/html/index.html
+        - name: Printing status
+          ansible.builtin.debug:
+            msg: block task was operated
+      rescue:
+        - name: Create a file  # noqa no-changed-when
+          ansible.builtin.command:
+            cmd: touch /var/www/html/index.html
+        - name: Printing rescue status
+          ansible.builtin.debug:
+            msg: rescue task was operated
+      always:
+        # - name: Always write a message to logs  # noqa command-instead-of-shell no-changed-when
+        #   ansible.builtin.shell:
+        #     cmd: logger hello
+        - name: Always printing this message
+          ansible.builtin.debug:
+            msg: this message is always printed
