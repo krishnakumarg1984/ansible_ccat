@@ -1,0 +1,4 @@
+myitems:
+- httpd
+- sshd
+- vsftpd

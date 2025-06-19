@@ -1,0 +1,15 @@
+---
+- name: Demo of handlers
+  hosts: ansible1
+  gather_facts: false
+  tasks:
+    - name: Copy a file  # noqa risky-file-permissions
+      ansible.builtin.copy:
+        src: ./index.html
+        dest: /var/www/html/index.html
+      notify: [Restart_web]  # needs web services to be installed & will work only on rhel systems
+  handlers:
+    - name: Restart_web
+      ansible.builtin.service:
+        name: httpd
+        state: restarted

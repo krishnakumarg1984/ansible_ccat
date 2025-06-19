@@ -1,0 +1,9 @@
+---
+- name: Demonstrate loop
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Show some looping
+      ansible.builtin.debug:
+        msg: '{{ item }}'
+      loop: [vsftpd, httpd, sshd]
