@@ -1,0 +1,11 @@
+---
+- name: Idempotent command lab 07
+  hosts: ansible1
+  gather_facts: false
+  tasks:
+    - name: Add a user  # noqa no-changed-when
+      ansible.builtin.command: useradd joan
+      register: addeduser
+    - name: Check user is added
+      ansible.builtin.debug:
+        var: addeduser
