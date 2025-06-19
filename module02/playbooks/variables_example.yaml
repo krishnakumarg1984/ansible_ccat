@@ -5,7 +5,7 @@
     myuser: anna
   hosts: all
   tasks:
-    - name: Creating user {{ myuser }}
+    - name: Administering changes related to user {{ myuser }}
       ansible.builtin.user:
         name: '{{ myuser }}'
         shell: /bin/bash
