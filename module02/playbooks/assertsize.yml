@@ -9,7 +9,7 @@
   tasks:
     - name: Check if file size is valid
       ansible.builtin.assert:
-        that: ['{{ (filesize | int) <= 100 }}', '{{ (filesize | int) >= 1 }}']
+        that: [(filesize | int) <= 100, (filesize | int) >= 1]
         fail_msg: file size must be between 0 and 100
         success_msg: file size is good, lets continue
     - name: Create a file  # noqa no-changed-when
