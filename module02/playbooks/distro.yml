@@ -1,9 +1,10 @@
 ---
 - name: Demo of `when`
   hosts: all
+  gather_facts: false
   vars:
     # supported_distros: [Ubuntu, CentOS, Fedora]
-    supported_distros: [CentOS, Fedora]
+    supported_distros: [CentOS, Fedora, RedHat]
     mypackage: nmap
   tasks:
     - name: Install RH family specific packages
