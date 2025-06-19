@@ -1,9 +1,9 @@
 ---
 - name: demo the register facility
   hosts: ansible1
-  gather_facts: false
+  gather_facts: falspasswd_contentse
   tasks:
-    - name: Show the date
+    - name: Run the date command
       ansible.builtin.command: date
       register: thisdate
     - name: Show the contents of the register variable
