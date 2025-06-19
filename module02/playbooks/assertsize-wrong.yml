@@ -1,15 +1,16 @@
 ---
-- hosts: localhost
+- name: Assert example with sizes
+  hosts: localhost
+  gather_facts: false
   vars_prompt:
-  - name: filesize
-    prompt: "specify a file size in megabytes"
+    - name: filesize
+      prompt: specify a file size in megabytes
+      private: false
   tasks:
-  - name: check if file size is valid
-    assert:
-      that:
-      - filesize <= 100
-      - filesize >= 1
-      fail_msg: "file size must be between 0 and 100"
-      success_msg: "file size is good, lets continue"
-  - name: create a file
-    command: dd if=/dev/zero of=/bigfile bs=1 count={{ filesize }} 
+    - name: Check if file size is valid
+      ansible.builtin.assert:
+        that: [filesize <= 100, filesize >= 1]
+        fail_msg: file size must be between 0 and 100
+        success_msg: file size is good, lets continue
+    - name: Create a file  # noqa no-changed-when
+      ansible.builtin.command: dd if=/dev/zero of=/bigfile bs=1 count={{ filesize }}
