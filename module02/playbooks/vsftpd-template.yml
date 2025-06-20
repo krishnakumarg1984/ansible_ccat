@@ -1,0 +1,16 @@
+---
+- name: Configure VSFTPD using a template
+  hosts: ansible1
+  vars:
+    anonymous_enable: true
+    local_enable: true
+    write_enable: true
+    anon_upload_enable: true
+  tasks:
+    - name: Install vsftpd
+      ansible.builtin.dnf:
+        name: vsftpd
+    - name: Use template to copy FTP config  # noqa risky-file-permissions
+      ansible.builtin.template:
+        src: vsftpd.j2
+        dest: /etc/vsftpd/vsftpd.conf
