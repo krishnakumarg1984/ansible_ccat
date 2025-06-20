@@ -1,0 +1,23 @@
+---
+- name: Custom facts example 1
+  hosts: ansible1
+  gather_facts: false
+  tasks:
+    - name: Create custom fact on ansible1  # noqa risky-file-permissions
+      ansible.builtin.blockinfile:
+        path: /etc/ansible/facts.d/local.fact
+        create: true
+        block: |
+          [localfacts]
+          type: production
+- name: Custom facts example 2
+  hosts: ansible2
+  gather_facts: false
+  tasks:
+    - name: Create custom fact on ansible2  # noqa risky-file-permissions
+      ansible.builtin.blockinfile:
+        path: /etc/ansible/facts.d/local.fact
+        create: true
+        block: |-
+          [localfacts]
+          type: testing
