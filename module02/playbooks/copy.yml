@@ -1,6 +1,7 @@
 ---
 - name: File copy modules
   hosts: all
+  gather_facts: false
   tasks:
     - name: Copy file demo  # noqa risky-file-permissions
       ansible.builtin.copy:
