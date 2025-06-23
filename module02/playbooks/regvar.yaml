@@ -4,7 +4,7 @@
   # hosts: localhost
   gather_facts: false
   tasks:
-    - name: Run the date command
+    - name: Run the date command  # noqa: no-changed-when
       ansible.builtin.command: date
       register: thisdate
     - name: Show the contents of the register variable

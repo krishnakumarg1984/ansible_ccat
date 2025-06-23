@@ -1,5 +1,5 @@
 ---
-- name: showing host variables
+- name: Showing host variables
   hosts: localhost
   gather_facts: false
   vars:
@@ -9,7 +9,7 @@
     - name: Demo magic variables
       ansible.builtin.debug:
         msg: this host with the name {{ inventory_hostname }} is using {{ hostvars }}
-    - name: Creating group
+    - name: Creating group  # noqa: no-changed-when
       ansible.builtin.command: groupadd "{{ groups }}"
     - name: Creating a user that is a member of {{ groups }}
       ansible.builtin.user:

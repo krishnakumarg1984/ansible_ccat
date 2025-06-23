@@ -1,5 +1,5 @@
 ---
-- name: create a user
+- name: Create a user
   hosts: all
   vars_files: [secret.yaml]
   tasks:
