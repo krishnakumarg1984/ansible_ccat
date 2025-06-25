@@ -29,5 +29,5 @@
   tasks:
     - name: Show url
       ansible.builtin.debug:
-        msg: ansible1 http shows {{ lookup('url', 'http://ansible1') }} ansible1
-          https shows {{ lookup('url', 'https://ansible1') }}
+        msg: ansible1 http shows {{ lookup('url', 'http://ansible1') }}
+             # ansible1 https shows {{ lookup('url', 'https://ansible1') }}
