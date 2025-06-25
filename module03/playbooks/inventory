@@ -1,0 +1,6 @@
+[rhel]
+control
+ansible1
+
+[ubuntu]
+ansible2
