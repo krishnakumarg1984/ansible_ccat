@@ -1,0 +1,278 @@
+## **Chezmoi Ansible Role Documentation**
+
+### Overview
+
+The **Chezmoi** Ansible role allows you to manage your dotfiles and other configuration files across multiple machines using **Chezmoi** (a tool to manage personal configurations). The role provides tasks for:
+
+* Cloning a dotfile repository
+* Applying dotfiles
+* Removing dotfiles
+* Encrypting and decrypting secret files
+* Managing templates
+
+This documentation will guide you through different playbooks that demonstrate various use cases of the **Chezmoi** role.
+
+---
+
+## **Table of Contents**
+
+1. [Basic Setup – Clone and Apply Dotfiles](#basic-setup-clone-and-apply-dotfiles)
+2. [Apply Specific Dotfiles](#apply-specific-dotfiles)
+3. [Remove Dotfiles](#remove-dotfiles)
+4. [Encrypt/Decrypt Secret Files](#encryptdecrypt-secret-files)
+5. [Apply Templates](#apply-templates)
+6. [Full Workflow: Clone, Apply, Backup, and Encrypt](#full-workflow-clone-apply-backup-and-encrypt)
+7. [Testing the Role](#testing-the-role)
+
+---
+
+### 1. **Basic Setup – Clone and Apply Dotfiles**
+
+#### **Purpose:**
+
+This playbook is used to **clone** a Chezmoi repository and apply all the dotfiles contained within it.
+
+#### **Playbook Example:**
+
+```yaml
+---
+- name: Set up dotfiles with Chezmoi
+  hosts: localhost
+  become: yes
+  roles:
+    - chezmoi
+  vars:
+    github_url: "git@github.com:username/repo.git"  # Replace with your GitHub SSH URL
+    ssh_key: "/path/to/ssh/key"                    # Optional: Path to SSH key for GitHub authentication
+    chezmoi_state: "present"                       # Ensure dotfiles are applied
+    chezmoi_dir: "{{ ansible_user_dir }}/.local/share/chezmoi"  # Directory where Chezmoi stores dotfiles
+    backup_dir: "{{ ansible_user_dir }}/chezmoi_backup"         # Directory to backup current dotfiles
+    show_diff: false                               # Set to true to show a diff before applying changes
+```
+
+#### **How It Works:**
+
+* The playbook ensures that **Chezmoi** is properly set up, syncing your dotfiles from the specified **GitHub repository** to the system.
+* The dotfiles will be applied to the system, and any existing dotfiles will be backed up to the specified directory.
+* The **`show_diff`** variable determines whether the playbook will show a diff of changes before applying them.
+
+---
+
+### 2. **Apply Specific Dotfiles**
+
+#### **Purpose:**
+
+This playbook applies only specific dotfiles (e.g., `.bashrc` and `.vimrc`) from the Chezmoi repository, rather than applying all dotfiles.
+
+#### **Playbook Example:**
+
+```yaml
+---
+- name: Apply specific dotfiles with Chezmoi
+  hosts: localhost
+  become: yes
+  roles:
+    - chezmoi
+  vars:
+    github_url: "git@github.com:username/repo.git"  # Replace with your GitHub SSH URL
+    ssh_key: "/path/to/ssh/key"                    # Optional: Path to SSH key for GitHub authentication
+    chezmoi_state: "present"                       # Ensure dotfiles are applied
+    specific_files:
+      - ".bashrc"
+      - ".vimrc"
+    chezmoi_dir: "{{ ansible_user_dir }}/.local/share/chezmoi"
+    backup_dir: "{{ ansible_user_dir }}/chezmoi_backup"
+    show_diff: true                                # Show diff before applying changes
+```
+
+#### **How It Works:**
+
+* The **`specific_files`** variable lists the dotfiles (e.g., `.bashrc`, `.vimrc`) to be applied from the repository.
+* The **`show_diff`** option is set to `true`, so you can preview the changes before they are applied to your system.
+
+---
+
+### 3. **Remove Dotfiles**
+
+#### **Purpose:**
+
+This playbook removes previously applied dotfiles from the system.
+
+#### **Playbook Example:**
+
+```yaml
+---
+- name: Remove dotfiles with Chezmoi
+  hosts: localhost
+  become: yes
+  roles:
+    - chezmoi
+  vars:
+    github_url: "git@github.com:username/repo.git"  # Replace with your GitHub SSH URL
+    ssh_key: "/path/to/ssh/key"                    # Optional: Path to SSH key for GitHub authentication
+    chezmoi_state: "absent"                        # Remove dotfiles
+    chezmoi_dir: "{{ ansible_user_dir }}/.local/share/chezmoi"
+    backup_dir: "{{ ansible_user_dir }}/chezmoi_backup"
+    specific_files:
+      - ".bashrc"
+      - ".vimrc"                                   # Remove these specific files
+```
+
+#### **How It Works:**
+
+* The **`chezmoi_state`** is set to **`absent`** to remove the specified dotfiles (in this case, `.bashrc` and `.vimrc`) from the system.
+* Existing dotfiles are backed up before removal to avoid data loss.
+
+---
+
+### 4. **Encrypt/Decrypt Secret Files**
+
+#### **Purpose:**
+
+This playbook demonstrates how to encrypt or decrypt sensitive files (e.g., `.env` files) using **Chezmoi**.
+
+#### **Playbook Example: Encrypt Secret File**
+
+```yaml
+---
+- name: Encrypt secret file with Chezmoi
+  hosts: localhost
+  become: yes
+  roles:
+    - chezmoi
+  vars:
+    github_url: "git@github.com:username/repo.git"  # Replace with your GitHub SSH URL
+    ssh_key: "/path/to/ssh/key"                    # Optional: Path to SSH key for GitHub authentication
+    secret_action: "encrypt"                       # Action to encrypt
+    secret_file: "{{ ansible_user_dir }}/.env"     # The secret file to encrypt
+    chezmoi_dir: "{{ ansible_user_dir }}/.local/share/chezmoi"
+```
+
+#### **Playbook Example: Decrypt Secret File**
+
+```yaml
+---
+- name: Decrypt secret file with Chezmoi
+  hosts: localhost
+  become: yes
+  roles:
+    - chezmoi
+  vars:
+    github_url: "git@github.com:username/repo.git"  # Replace with your GitHub SSH URL
+    ssh_key: "/path/to/ssh/key"                    # Optional: Path to SSH key for GitHub authentication
+    secret_action: "decrypt"                       # Action to decrypt
+    secret_file: "{{ ansible_user_dir }}/.env"     # The secret file to decrypt
+    chezmoi_dir: "{{ ansible_user_dir }}/.local/share/chezmoi"
+```
+
+#### **How It Works:**
+
+* **Encryption:** The playbook encrypts a secret file (e.g., `.env`) to protect sensitive information.
+* **Decryption:** The playbook decrypts the secret file, restoring it to its original state.
+* The **`secret_action`** can either be `encrypt` or `decrypt`, depending on what operation you want to perform on the file.
+
+---
+
+### 5. **Apply Templates**
+
+#### **Purpose:**
+
+This playbook applies Jinja2 templates from a specified directory, allowing you to generate configuration files with dynamic content.
+
+#### **Playbook Example:**
+
+```yaml
+---
+- name: Apply templates using Chezmoi
+  hosts: localhost
+  become: yes
+  roles:
+    - chezmoi
+  vars:
+    github_url: "git@github.com:username/repo.git"  # Replace with your GitHub SSH URL
+    ssh_key: "/path/to/ssh/key"                    # Optional: Path to SSH key for GitHub authentication
+    template_dir: "{{ ansible_user_dir }}/templates"  # Directory with templates to apply
+    chezmoi_dir: "{{ ansible_user_dir }}/.local/share/chezmoi"
+```
+
+#### **How It Works:**
+
+* The playbook applies templates from the specified directory using **Jinja2** templating.
+* This can be useful for dynamically configuring files based on host-specific variables or settings.
+
+---
+
+### 6. **Full Workflow: Clone, Apply, Backup, and Encrypt**
+
+#### **Purpose:**
+
+This playbook combines multiple tasks, such as cloning a repository, applying dotfiles, backing up existing files, and encrypting secret files.
+
+#### **Playbook Example:**
+
+```yaml
+---
+- name: Full Chezmoi workflow
+  hosts: localhost
+  become: yes
+  roles:
+    - chezmoi
+  vars:
+    github_url: "git@github.com:username/repo.git"  # Replace with your GitHub SSH URL
+    ssh_key: "/path/to/ssh/key"                    # Optional: Path to SSH key for GitHub authentication
+    chezmoi_state: "present"                       # Apply dotfiles
+    chezmoi_dir: "{{ ansible_user_dir }}/.local/share/chezmoi"
+    backup_dir: "{{ ansible_user_dir }}/chezmoi_backup"
+    specific_files:
+      - ".bashrc"
+      - ".vimrc"
+    show_diff: true                                # Show diff before applying changes
+    secret_action: "encrypt"                       # Encrypt the secret file
+    secret_file: "{{ ansible_user_dir }}/.env"     # Secret file to encrypt
+```
+
+#### **How It Works:**
+
+* The playbook applies the **Chezmoi** workflow: clones the dotfiles repository, applies specific dotfiles, backs up existing files,
+
+
+and encrypts sensitive files like `.env`.
+
+---
+
+### 7. **Testing the Role**
+
+#### **Purpose:**
+
+This playbook tests the role by ensuring that Chezmoi can be properly applied and that dotfiles can be cloned and applied correctly.
+
+#### **Playbook Example:**
+
+```yaml
+---
+- hosts: localhost
+  gather_facts: no
+  roles:
+    - chezmoi
+  vars:
+    github_url: "git@github.com:username/repo.git"  # Replace with your GitHub SSH URL
+    ssh_key: "/path/to/ssh/key"                    # Optional: Path to SSH key for GitHub authentication
+    chezmoi_state: "present"
+    show_diff: true
+    specific_files:
+      - ".bashrc"
+      - ".vimrc"
+    backup_dir: "/home/user/chezmoi_backup"
+```
+
+#### **How It Works:**
+
+* This playbook is useful for validating that the **Chezmoi** role functions as expected.
+* It verifies that the repository is cloned, the dotfiles are applied, and any required backups are taken.
+
+---
+
+### Conclusion
+
+These example playbooks showcase a wide range of capabilities that the **Chezmoi** Ansible role offers for managing personal dotfiles and configurations. By customizing variables like `github_url`, `specific_files`, and `backup_dir`, you can tailor these playbooks to fit your personal setup and deployment needs.
+

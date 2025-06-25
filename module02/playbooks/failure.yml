@@ -8,7 +8,7 @@
       ansible.builtin.command: echo hello world
       ignore_errors: true
       register: command_result
-      failed_when: "'world' in command_result.stdout"
+      failed_when: "'world' in command_result.stdout"  # just to simulate a failure
     - name: See if we get here
       ansible.builtin.debug:
         msg: hello

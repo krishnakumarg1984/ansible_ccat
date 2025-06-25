@@ -1,0 +1,3 @@
+---
+- name: Modify sudoers
+  hosts: ansible1
