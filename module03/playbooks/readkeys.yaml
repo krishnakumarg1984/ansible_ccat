@@ -1,6 +1,7 @@
 ---
 - name: Read user ssh keys
   hosts: ansible1
+  gather_facts: false
   become: true
   vars:
     users: [student, ansible]
