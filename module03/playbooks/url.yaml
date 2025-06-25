@@ -7,7 +7,7 @@
       ansible.builtin.dnf:
         name: httpd
         state: present
-    - name: Create index.html # noqa: risky-file-permissions
+    - name: Create index.html  # noqa: risky-file-permissions
       ansible.builtin.copy:
         content: welcome to this webserver
         dest: /var/www/html/index.html
@@ -18,7 +18,7 @@
         enabled: true
     - name: Open firewall
       ansible.posix.firewalld:
-        service: "{{ item }}"
+        service: '{{ item }}'
         state: enabled
         permanent: true
         immediate: true
@@ -29,4 +29,5 @@
   tasks:
     - name: Show url
       ansible.builtin.debug:
-        msg: ansible1 shows {{ lookup('url', 'http://ansible1') }}
+        msg: ansible1 http shows {{ lookup('url', 'http://ansible1') }} ansible1
+          https shows {{ lookup('url', 'https://ansible1') }}
