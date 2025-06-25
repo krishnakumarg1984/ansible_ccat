@@ -1,0 +1,32 @@
+---
+- name: Showing map
+  hosts: ansible1
+  gather_facts: false
+  ignore_errors: true
+  vars:
+    basedir: /var/www/html
+  tasks:
+    - name: Install httpd
+      ansible.builtin.dnf:
+        name: httpd
+        state: present
+    - name: Showing files in basedir
+      ansible.builtin.find:
+        paths: "{{ basedir }}"
+        recurse: true
+      register: basedir_files
+    - name: Showing current variable contents to understand why we need map
+      ansible.builtin.debug:
+        var: basedir_files
+    - name: Show files based on map attribute with list
+      ansible.builtin.set_fact:
+        webfileslist: "{{ basedir_files['files'] | map(attribute='path') | list }}"
+    - name: Show the webfileslist variable value
+      ansible.builtin.debug:
+        var: webfileslist
+    - name: Now that we know that the list filter is mandatory, show relative file name
+      ansible.builtin.set_fact:
+        webfilesrelative: "{{ webfileslist | map('relpath', basedir) | list }}"
+    - name: Show the webfilesrelative variable value
+      ansible.builtin.debug:
+        var: webfilesrelative
