@@ -1,0 +1,16 @@
+---
+- name: Read user ssh keys
+  hosts: ansible1
+  become: true
+  vars:
+    users: [student, ansible]
+  tasks:
+    - name: Create users
+      ansible.builtin.user:
+        name: '{{ item }}'
+      loop: '{{ users }}'
+    - name: Add authorized keys
+      ansible.posix.authorized_key:
+        user: '{{ item }}'
+        key: "{{ lookup('file', item + '/id_rsa.pub') }}"
+      loop: '{{ users }}'
