@@ -1,6 +1,7 @@
 ---
 - name: Example Playbook Using selectattr Filter
   hosts: localhost
+  gather_facts: false
   vars:
     users:
       - name: alice
