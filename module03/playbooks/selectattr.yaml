@@ -16,22 +16,21 @@
         active: false
         role: guest
   tasks:
-    - name: filter active users
-      set_fact:
+    - name: Filter active users
+      ansible.builtin.set_fact:
         active_users: "{{ users | selectattr('active', 'equalto', true) | list }}"
-    - name: display active users
-      debug:
+    - name: Display active users
+      ansible.builtin.debug:
         var: active_users
-    - name: filter inactive users
-      set_fact:
+    - name: Filter inactive users
+      ansible.builtin.set_fact:
         inactive_users: "{{ users | selectattr('active', 'equalto', false) | list }}"
-    - name: display inactive users
-      debug:
+    - name: Display inactive users
+      ansible.builtin.debug:
         var: inactive_users
-    - name: filter users by role 'user'
-      set_fact:
+    - name: Filter users by role 'user'
+      ansible.builtin.set_fact:
         user_role_users: "{{ users | selectattr('role', 'equalto', 'user') | list }}"
-    - name: display users with role 'user'
-      debug:
+    - name: Display users with role 'user'
+      ansible.builtin.debug:
         var: user_role_users
-
