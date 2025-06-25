@@ -1,0 +1,12 @@
+---
+- name: Checking out lines and pipes lookup plugins
+  hosts: localhost
+  become: false
+  gather_facts: false
+  tasks:
+    - name: Print the first line of any file
+      ansible.builtin.debug:
+        msg: "{{ item[0] }}"
+      loop:
+        - "{{ query('lines', 'cat /etc/hosts') }}"
+        - "{{ query('lines', 'cat /etc/passwd') }}"
