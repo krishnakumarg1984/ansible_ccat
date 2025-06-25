@@ -1,0 +1,1 @@
+ansible-inventory --yaml -i windows/inventory --list --output winventory.yaml

@@ -1,7 +1,0 @@
----
-- name: checking the fact cache
-  hosts: all
-  gather_facts: False
-  tasks:
-  - debug:
-      var: ansible_facts

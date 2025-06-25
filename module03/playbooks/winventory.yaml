@@ -1,0 +1,15 @@
+all:
+  children:
+    file:
+      hosts:
+        ansible2.example.com: {}
+    lamp:
+      hosts:
+        ansible1.example.com: {}
+    win:
+      hosts:
+        windows.example.com:
+          ansible_connection: winrm
+          ansible_password: '@nsible123'
+          ansible_user: ansible
+          ansible_winrm_server_cert_validation: ignore
