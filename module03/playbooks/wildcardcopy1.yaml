@@ -1,7 +1,9 @@
 ---
-- hosts: ansible2
+- name: Demo unsupported wildcard copy with copy module
+  hosts: ansible2
+  gather_facts: false
   tasks:
-    - name: Trying to copy multiple files from control to host
+    - name: Trying to copy multiple files from control to host # noqa: risky-file-permissions
       ansible.builtin.copy:
         src: ~/ansible_ccat/*
         dest: /tmp

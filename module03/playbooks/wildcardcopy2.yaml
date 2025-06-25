@@ -1,9 +1,10 @@
 ---
 - name: Copying with a wildcard
   hosts: ansible2
+  gather_facts: false
   tasks:
-    - name: Copying with a wildcard # noqa: risky-file-permissions
+    - name: Copying with a wildcard  # noqa: risky-file-permissions
       ansible.builtin.copy:
-        src: "{{ item }}"
+        src: '{{ item }}'
         dest: /tmp
       loop: "{{ query('fileglob', '~/ansible_ccat/*') }}"
