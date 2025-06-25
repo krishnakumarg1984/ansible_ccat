@@ -14,13 +14,12 @@
         type: "dynamic"
   tasks:
     - name: Filter only fixed IP addresses
-      set_fact:
+      ansible.builtin.set_fact:
         only_fixed_addresses: "{{ all_addresses | selectattr('type', 'equalto', 'fixed') | list }}"
     - name: Display only fixed IP addresses
-      debug:
+      ansible.builtin.debug:
         msg: "Fixed IP Addresses: {{ only_fixed_addresses }}"
     - name: Display only fixed IP addresses in a formatted way
-      debug:
+      ansible.builtin.debug:
         msg: "IP Address: {{ item.ip }}"
       loop: "{{ only_fixed_addresses }}"
-
