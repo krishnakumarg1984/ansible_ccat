@@ -2,3 +2,4 @@
 **/*secret*
 **/*vault**
 **/ansible-navigator.log
+**/credentials
