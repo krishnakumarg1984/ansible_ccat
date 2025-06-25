@@ -1,0 +1,8 @@
+---
+- name: Testing fileglob
+  hosts: all
+  tasks:
+    - name: Testing fileglob
+      ansible.builtin.debug:
+        msg: "{{ item }}"
+      loop: "{{ query('fileglob', '~/.*') }}"
