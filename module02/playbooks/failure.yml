@@ -9,6 +9,7 @@
       ignore_errors: true
       register: command_result
       failed_when: "'world' in command_result.stdout"  # just to simulate a failure
+      # failed_when: "'world' in command_result.stdout"
     - name: See if we get here
       ansible.builtin.debug:
         msg: hello
