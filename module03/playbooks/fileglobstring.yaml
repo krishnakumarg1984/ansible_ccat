@@ -1,9 +1,8 @@
 ---
-- name: Testing fileglob
+- name: testing fileglob
   hosts: all
   gather_facts: false
   tasks:
     - name: Testing fileglob
       ansible.builtin.debug:
-        msg: '{{ item }}'
-      loop: "{{ query('fileglob', '~/.*') }}"
+        msg: "{{ lookup('fileglob', '~/.*') }}"
